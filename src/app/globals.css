@@ -19,6 +19,9 @@ body {
   padding: 0;
   margin: 0;
 }
+section{
+  @apply flex flex-col px-4 py-8 w-full gap-y-10;
+}
 
 a {
   color: inherit;
