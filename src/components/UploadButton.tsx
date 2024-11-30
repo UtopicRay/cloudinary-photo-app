@@ -2,16 +2,22 @@
 import {Button} from "@/components/ui/button";
 import {Upload} from "lucide-react";
 import {CldUploadButton} from "next-cloudinary";
+import {useRouter} from "next/navigation";
 
 export default function UploadButton(){
+    const router = useRouter()
     return(
-        <Button asChild>
             <Button asChild>
-                <div className='flex gap-2'>
-                    <Upload/>
-                    <CldUploadButton uploadPreset={`ymik0prr`}></CldUploadButton>
-                </div>
+                    <CldUploadButton className='flex gap-2 items-center' uploadPreset={`ymik0prr`}
+                    onSuccess={()=>{
+                        setTimeout(()=> {
+                            router.refresh()
+                            console.log('refresh')
+                        },3000)
+                    }}>
+                        <Upload/>
+                        <p>Upload</p>
+                    </CldUploadButton>
             </Button>
-        </Button>
     )
 }
