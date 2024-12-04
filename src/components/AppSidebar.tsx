@@ -6,17 +6,17 @@ export default function AppSidebar() {
     const items = [
         {
             title: "Gallery",
-            url: "gallery",
+            url: "/gallery",
             icon: Image,
         },
         {
             title: "Albums",
-            url: "albums",
+            url: "/albums",
             icon: Folder,
         },
         {
             title: "Favorites",
-            url: "favorites",
+            url: "/favorites",
             icon: Heart,
         },
     ]

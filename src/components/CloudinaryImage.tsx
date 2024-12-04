@@ -13,12 +13,12 @@ export default function CloudinaryImage({imageData,unHeart}:{imageData:ImageAPI,
     const [isFavorited,setIsFavorited] = useState<boolean>(imageData.tags.includes("favorite"))
     const router = useRouter();
     return (
-        <div className='relative rounded-lg w-full'>
-            <CldImage className='rounded-lg max-w-full h-auto' alt='image' src={imageData.public_id} width={400}
+        <div className='relative rounded-lg w-full hover:scale-105 duration-200'>
+            <CldImage className='rounded-lg max-w-full h-auto ' alt='image' src={imageData.public_id} width={400}
                       height={300}>
             </CldImage>
             <div className='absolute top-3 left-2'>
-            <Heart className={`hover:text-red-500 ${isFavorited && 'text-red-500 hover:text-white'}`}
+            <Heart className={`${isFavorited?'text-red-500 hover:text-blue-500':'text-blue-500 hover:text-red-500'}`}
                    fill={`${isFavorited ? 'red' : 'white'}`} onClick={() => {
                 startTransition(async ()=>{
                     setIsFavorited(!isFavorited);
@@ -28,7 +28,7 @@ export default function CloudinaryImage({imageData,unHeart}:{imageData:ImageAPI,
                 })
             }}/>
         </div>
-            <MenuImage/>
+            <MenuImage tags={imageData.tags} public_id={imageData.public_id} />
         </div>
     );
 }
