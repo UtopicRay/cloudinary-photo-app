@@ -4,6 +4,7 @@ import {Menu, Pencil} from "lucide-react";
 import AddToAlbumDialog from "@/components/AddToAlbumDialog";
 import {ImageAPI} from "@/types";
 import Link from "next/link";
+import DeleteDialog from "@/components/DeleteDialog";
 
 export default function MenuImage(image: ImageAPI) {
     return (
@@ -25,6 +26,9 @@ export default function MenuImage(image: ImageAPI) {
                                 <span className='text-left w-full'>Edit</span>
                             </Link>
                         </Button>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <DeleteDialog image={image}/>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
