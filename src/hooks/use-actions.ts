@@ -20,3 +20,15 @@ export async function AddToAlbum({image, folder}:{image:ImageAPI,folder:string})
 export async function deleteImage(public_id:string): Promise<void> {
     await cloudinary.v2.api.delete_resources([public_id]);
 }
+
+export async function deleteAlbum(folder: string) {
+    const images = await cloudinary.v2.api.resources_by_asset_folder(folder) as {
+        resources: ImageAPI[]
+    };
+    if (images) {
+        images.resources.forEach(async (image: ImageAPI) => {
+            await cloudinary.v2.api.update(image.public_id, { asset_folder:`/`}).then(results => {console.log(results);});
+        })
+    }
+    await cloudinary.v2.api.delete_folder(folder);
+}
