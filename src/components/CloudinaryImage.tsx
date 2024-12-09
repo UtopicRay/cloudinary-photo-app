@@ -9,6 +9,7 @@ import MenuImage from "@/components/MenuImage";
 
 
 export default function CloudinaryImage({imageData,unHeart,atHome}:{imageData:ImageAPI,unHeart?:(resource:ImageAPI)=>void,atHome?:boolean}) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [transition, startTransition] = useTransition()
     const [isFavorited,setIsFavorited] = useState<boolean>(imageData.tags.includes("favorite"))
     const router = useRouter();

@@ -1,5 +1,4 @@
 import UploadButton from "@/components/UploadButton";
-import {CldImage} from "next-cloudinary";
 import EditPanel from "@/app/edit/EditPanel";
 
 export default async function EditPage({searchParams: {publicId}}: {

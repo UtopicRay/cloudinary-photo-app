@@ -8,9 +8,14 @@ import {useRouter} from "next/navigation";
 export default function SearchComponent() {
     const [searchTag, setSearchTag] = useState<string>('');
     const router = useRouter();
-    function handleClick(e) {
+
+    function handleClick(e: { preventDefault: () => void; }) {
         e.preventDefault();
-        router.replace(`/gallery?tag=${encodeURIComponent(searchTag)}`);
+        if (searchTag != '') {
+            router.replace(`/gallery?tag=${encodeURIComponent(searchTag)}`);
+        }else{
+            router.replace('/gallery');
+        }
     }
 
     return (
