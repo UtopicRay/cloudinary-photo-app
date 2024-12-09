@@ -9,6 +9,6 @@ export default function Navbar() {
                     <AvatarImage src={'/logo_album.png'}/>
                     <AvatarFallback>Logo</AvatarFallback>
                 </Avatar>
-                PHOTO AlBUM</Link>
+                NEXT AlBUM</Link>
     </nav>)
 }
