@@ -1,17 +1,16 @@
-import {
-    Tabs,
-    TabsContent,
-} from "@/components/ui/tabs"
+import {Tabs, TabsContent,} from "@/components/ui/tabs"
 import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area'
 import {Separator} from "@/components/ui/separator";
 import UploadButton from "@/components/UploadButton";
 import cloudinary from "cloudinary";
-import {ImageAPI} from "@/types";
-import FavoriteList from "@/components/FavoriteList";
+import {Folder, ImageAPI} from "@/types";
+import AlbumCard from "@/app/albums/AlbumCard";
+import ScrollBarFavorites from "@/components/ScrollBarFavorites";
 
 export default  async function Home() {
-    const results = await cloudinary.v2.search.expression("tags=favorite").fields('tags').max_results(10)
+    const favorites = await cloudinary.v2.search.fields('tags').sort_by('created_at', 'desc').max_results(5)
         .execute() as { resources: ImageAPI[] };
+    const {folders} = await cloudinary.v2.api.root_folders();
   return (
       <div className="col-span-3 lg:col-span-4 lg:border-l w-full">
           <div className="h-full px-4 py-6 lg:px-8">
@@ -27,53 +26,40 @@ export default  async function Home() {
                       <div className="flex items-center justify-between">
                           <div className="space-y-1">
                               <h2 className="text-2xl font-semibold tracking-tight">
-                                  Listen Now
+                                  Recients Images
                               </h2>
                               <p className="text-sm text-muted-foreground">
-                                  Top picks for you. Updated daily.
+                                  View the recents images
                               </p>
                           </div>
                       </div>
                       <Separator className="my-4"/>
-                      <div className="relative">
-                          <ScrollArea>
-                              <div className="flex space-x-4 pb-4">
-                                  <FavoriteList resources={results.resources}/>
-                              </div>
-                              <ScrollBar orientation="horizontal"/>
-                          </ScrollArea>
-                      </div>
+                      <ScrollBarFavorites favorites={favorites.resources}/>
                       <div className="mt-6 space-y-1">
                           <h2 className="text-2xl font-semibold tracking-tight">
-                              Made for You
+                              Access to your Albums
                           </h2>
                           <p className="text-sm text-muted-foreground">
-                              Your personal playlists. Updated daily.
+                              See quickly some albums.
                           </p>
                       </div>
                       <Separator className="my-4"/>
                       <div className="relative">
                           <ScrollArea>
-                              <div className="flex space-x-4 pb-4">
-
-                              </div>
+                              {folders.length>0 ? (
+                                  <div className="flex space-x-4 pb-4">
+                                      {
+                                          folders.map((folder: Folder) => (
+                                              <AlbumCard key={folder.path} name={folder.name}/>
+                                          ))
+                                      }
+                                  </div>) : (
+                                  <div className='mt-4'>
+                                      <h2 className='text-4xl'>No albums yet</h2>
+                                  </div>
+                              )}
                               <ScrollBar orientation="horizontal"/>
                           </ScrollArea>
-                      </div>
-                  </TabsContent>
-                  <TabsContent
-                      value="podcasts"
-                      className="h-full flex-col border-none p-0 data-[state=active]:flex"
-                  >
-                      <div className="flex items-center justify-between">
-                          <div className="space-y-1">
-                              <h2 className="text-2xl font-semibold tracking-tight">
-                                  New Episodes
-                              </h2>
-                              <p className="text-sm text-muted-foreground">
-                                  Your favorite podcasts. Updated daily.
-                              </p>
-                          </div>
                       </div>
                   </TabsContent>
               </Tabs>

@@ -8,13 +8,13 @@ import {ImageAPI} from "@/types";
 import MenuImage from "@/components/MenuImage";
 
 
-export default function CloudinaryImage({imageData,unHeart}:{imageData:ImageAPI,unHeart?:(resource:ImageAPI)=>void}) {
+export default function CloudinaryImage({imageData,unHeart,atHome}:{imageData:ImageAPI,unHeart?:(resource:ImageAPI)=>void,atHome?:boolean}) {
     const [transition, startTransition] = useTransition()
     const [isFavorited,setIsFavorited] = useState<boolean>(imageData.tags.includes("favorite"))
     const router = useRouter();
     return (
         <div className='relative rounded-lg w-full hover:scale-105 duration-200'>
-            <CldImage className='rounded-lg max-w-full h-auto ' alt='image' src={imageData.public_id} width={400}
+            <CldImage className={`rounded-lg  ${atHome?"h-auto w-auto object-cover aspect-[3/4]":"h-auto max-w-full"}`} alt='image' src={imageData.public_id} width={400}
                       height={300}>
             </CldImage>
             <div className='absolute top-3 left-2'>

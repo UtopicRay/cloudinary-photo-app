@@ -1,6 +1,6 @@
 import cloudinary from "cloudinary";
 import {ImageAPI} from "@/types";
-import FavoriteList from "@/components/FavoriteList";
+import FavoriteList from "@/app/favorites/FavoriteList";
 import UploadButton from "@/components/UploadButton";
 
 export default async function FavoritePage() {

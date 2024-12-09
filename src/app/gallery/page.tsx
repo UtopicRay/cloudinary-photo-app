@@ -5,10 +5,11 @@ import ImagesGrid from "@/components/ImagesGrid";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import {Suspense} from "react";
 import {LoaderCircle} from "lucide-react";
+import SearchComponent from "@/components/SearchComponent";
 
-export default async function  GalleryPage() {
-    const results = await cloudinary.v2.search.fields('tags').max_results(14)
-        .execute() as { resources: ImageAPI[] }
+export default async function  GalleryPage({searchParams: {tag}}:{searchParams:{tag?:string}}) {
+    console.log(tag);
+    const results = await cloudinary.v2.search.expression(`${tag?`tags=${tag}`:""}`).fields('tags').execute() as { resources: ImageAPI[] }
 
     return(
         <section>
@@ -16,6 +17,7 @@ export default async function  GalleryPage() {
                 <h1 className='text-4xl font-bold'>Gallery</h1>
                 <UploadButton/>
             </div>
+           <SearchComponent/>
             <Suspense fallback={<LoaderCircle/>}>
                 <ImagesGrid images={results.resources} getImage={(imageData) => {
                     return (
